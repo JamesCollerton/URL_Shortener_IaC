@@ -1,4 +1,4 @@
-# URL_Shorterner_IaC
+# URL Shorterner IaC
 
 This is the Infrastructure as Code for the URL shortener project that is not directly related to a CI/CD pipeline. Included in it is
 
