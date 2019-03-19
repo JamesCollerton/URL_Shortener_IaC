@@ -1,0 +1,60 @@
+swagger: "2.0"
+info:
+  description: "This is the API specification for the URL Shortening system"
+  version: "1.0.0"
+  title: "URL Shortener"
+tags:
+- name: "url-shortening"
+  description: "A system for shortening URLs"
+schemes:
+- "https"
+- "http"
+paths:
+  /short-url:
+    post:
+      tags:
+      - "url-shortening"
+      summary: "Add a new short-url to the database"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Long URL that needs to be converted to a short URL and added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/LongUrl"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/ShortLongUrlPair"
+        400:
+          description: "Bad request"
+        405:
+          description: "Invalid input"
+        500:
+          description: "Internal server error"
+        503:
+          description: "Service unavailable"
+definitions:
+  ShortLongUrlPair:
+    type: "object"
+    properties:
+      shortUrl:
+        type: "string"
+      longUrl:
+        type: "string"
+  ShortUrl:
+    type: "object"
+    properties:
+      shortUrl:
+        type: "string"
+  LongUrl:
+    type: "object"
+    properties:
+      longUrl:
+        type: "string"

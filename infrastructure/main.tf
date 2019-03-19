@@ -1,13 +1,4 @@
-terraform {
-   backend "s3" {
-    bucket               = "url-shortener-remote-state-bucket"
-    key                  = "shared-remote-state/api-gateway-dynamo-db/url-shortener/terraform.    tfstate"
-    profile              = "s3administrator"
-    region               = "eu-west-1"
-  }
-}
-
-provider "aws" {
-  profile = "${var.aws_profile}"
-  region  = "${var.aws_region}"
+resource "aws_api_gateway_rest_api" "aws_api_gateway_rest_api" {
+  name        = "${var.api_gateway_name}"
+  description = "${var.api_gateway_description}"
 }
