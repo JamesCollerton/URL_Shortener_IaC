@@ -1,5 +1,5 @@
 variable "aws_s3_bucket_name" {
-  default 	= "url-shortener-shared-remote-state-backend"
+  default 	= "url-shortener-remote-state-bucket"
   description 	= "Name to be assigned to the S3 bucket"
   type        	= "string"
 }
