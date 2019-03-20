@@ -10,11 +10,11 @@ schemes:
 - "https"
 - "http"
 paths:
-  /short-url:
+  /shortened-url-information:
     post:
       tags:
       - "url-shortening"
-      summary: "Add a new short-url to the database"
+      summary: "Add new shortened-url information to the database"
       description: ""
       consumes:
       - "application/json"
@@ -31,7 +31,59 @@ paths:
         201:
           description: "Created"
           schema:
-            $ref: "#/definitions/ShortLongUrlPair"
+            $ref: "#/definitions/ShortenedURLInformation"
+        400:
+          description: "Bad request"
+        405:
+          description: "Invalid input"
+        500:
+          description: "Internal server error"
+        503:
+          description: "Service unavailable"
+  /shortened-url-information/{short-url}:
+    get:
+      tags:
+      - "url-shortening"
+      summary: "Get an existing short-url to the database"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "short-url"
+        in: "path"
+        description: "The short URL that we need to retrieve the information for"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ShortenedURLInformation"
+        400:
+          description: "Bad request"
+        405:
+          description: "Invalid input"
+        500:
+          description: "Internal server error"
+        503:
+          description: "Service unavailable"
+  /shortened-url-information/{short-url}/redirect:
+    get:
+      tags:
+      - "url-shortening"
+      summary: "Get an existing short-url to the database"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "short-url"
+        in: "path"
+        description: "The short URL that we need to retrieve the information for"
+        required: true
+        type: "string"
+      responses:
+        301:
+          description: "Redirect to long URL"
         400:
           description: "Bad request"
         405:
@@ -41,7 +93,7 @@ paths:
         503:
           description: "Service unavailable"
 definitions:
-  ShortLongUrlPair:
+  ShortenedURLInformation:
     type: "object"
     properties:
       shortUrl:
