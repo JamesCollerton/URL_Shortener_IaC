@@ -10,14 +10,14 @@ variable "api_gateway_description" {
   type 		= "string" 
 }
 
- variable "api_gateway_body" {
+variable "api_gateway_body" {
   default 	= "./swaggeryaml/apidefinition.yml"
   description   = "The relative path to the OpenAPI YAML specification"
   type          = "string"
 }
 
 variable "aws_profile" {
-  default 	= "apigatewaydynamodbadministrator"
+  default 	= "urlshorteneradministrator"
   description 	= "Profile to be used"
   type        	= "string"
 }
