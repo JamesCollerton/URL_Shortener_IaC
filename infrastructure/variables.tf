@@ -16,6 +16,30 @@ variable "api_gateway_body" {
   type          = "string"
 }
 
+variable "create_short_url_lambda_api_gateway_path_part" {
+  default 	= "shortened-url-information"
+  description 	= "The path we want to make the request to"
+  type 		= "string"
+}
+
+variable "create_short_url_lambda_api_gateway_http_method" {
+  default 	= "POST"
+  description 	= "The HTTP method we would like to trigger the request"
+  type 		= "string"
+}
+
+variable "redirect_short_url_lambda_api_gateway_path_part" {
+  default 	= "shortened-url-information/{short-url}/redirect"
+  description 	= "The path we want to make the request to"
+  type 		= "string"
+}
+
+variable "redirect_short_url_lambda_api_gateway_http_method" {
+  default 	= "GET"
+  description 	= "The HTTP method we would like to trigger the request"
+  type 		= "string"
+}
+
 variable "aws_profile" {
   default 	= "urlshorteneradministrator"
   description 	= "Profile to be used"

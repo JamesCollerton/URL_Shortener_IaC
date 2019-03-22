@@ -7,10 +7,6 @@ terraform {
   }
 }
 
-data "template_file" "swagger_api" {
-  template = "${file("${path.module}/swagger-yaml/api-definition.yml")}"
-}
-
 provider "aws" {
   profile = "${var.aws_profile}"
   region  = "${var.aws_region}"
