@@ -34,6 +34,24 @@ variable "redirect_short_url_lambda_api_gateway_path_part" {
   type 		= "string"
 }
 
+variable "redirect_short_url_lambda_api_gateway_path_part_root" {
+  default 	= "redirect"
+  description 	= "The path we want to make the request to"
+  type 		= "string"
+}
+
+variable "redirect_short_url_lambda_api_gateway_path_part_short_url_id" {
+  default 	= "{short-url}"
+  description 	= "The path we want to make the request to"
+  type 		= "string"
+}
+
+variable "redirect_short_url_lambda_api_gateway_path_part_redirect" {
+  default 	= "redirect"
+  description 	= "The path we want to make the request to"
+  type 		= "string"
+}
+
 variable "redirect_short_url_lambda_api_gateway_http_method" {
   default 	= "GET"
   description 	= "The HTTP method we would like to trigger the request"

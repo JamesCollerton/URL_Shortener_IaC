@@ -8,14 +8,19 @@ module "api_gateway" {
 
 # Lambdas
 
+module "iam_for_lambda" {
+  source = "github.com/JamesCollerton/Terraform_Modules//awsiamlambdarole" 
+}
+
 module "create_short_url_lambda" {
   source = "github.com/JamesCollerton/URL_Shortener_Create_Short_URL_Lambda//infrastructure"
+  iam_for_lambda_arn = "${module.iam_for_lambda.arn}"
 }
 
 module "redirect_short_url_lambda" {
   source = "github.com/JamesCollerton/URL_Shortener_Redirect_Short_URL_Lambda//infrastructure"
+  iam_for_lambda_arn = "${module.iam_for_lambda.arn}"
 }
-
 
 # End points for each lambda
 
@@ -27,6 +32,18 @@ module "create_short_url_lambda_end_point" {
   api_gateway_http_method 		= "${var.create_short_url_lambda_api_gateway_http_method}"
   aws_lambda_function_invoke_arn 	= "${module.create_short_url_lambda.invoke_arn}"
 }
+
+#resource "aws_api_gateway_resource" "aws_api_gateway_resource" {
+#  rest_api_id = "${module.api_gateway.id}"
+#  parent_id   = "${var.api_gateway_root_id}"
+#  path_part   = "${var.api_gateway_path_part}"
+#}
+#
+#resource "aws_api_gateway_resource" "aws_api_gateway_resource" {
+#  rest_api_id = "${var.api_gateway_id}"
+#  parent_id   = "${var.api_gateway_root_id}"
+#  path_part   = "${var.api_gateway_path_part}"
+#}
 
 module "redirect_short_url_lambda_end_point" {
   source 				= "github.com/JamesCollerton/Terraform_Modules//apigatewaylambdaintegration"
