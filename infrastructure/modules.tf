@@ -33,23 +33,24 @@ module "create_short_url_lambda_end_point" {
   aws_lambda_function_invoke_arn 	= "${module.create_short_url_lambda.invoke_arn}"
 }
 
-#resource "aws_api_gateway_resource" "aws_api_gateway_resource" {
+#resource "aws_api_gateway_resource" "aws_api_gateway_resource_redirect_short_url_root" {
 #  rest_api_id = "${module.api_gateway.id}"
-#  parent_id   = "${var.api_gateway_root_id}"
-#  path_part   = "${var.api_gateway_path_part}"
+#  parent_id   = "${module.api_gateway.root_resource_id}"
+#  path_part   = "${var.redirect_short_url_lambda_api_gateway_path_part_root}"
 #}
-#
-#resource "aws_api_gateway_resource" "aws_api_gateway_resource" {
-#  rest_api_id = "${var.api_gateway_id}"
-#  parent_id   = "${var.api_gateway_root_id}"
-#  path_part   = "${var.api_gateway_path_part}"
-#}
+
+resource "aws_api_gateway_resource" "aws_api_gateway_resource_redirect_short_url_id" {
+  rest_api_id = "${module.api_gateway.id}"
+  #parent_id   = "${aws_api_gateway_resource.aws_api_gateway_resource_redirect_short_url_root.id}"
+  parent_id   = "${module.create_short_url_lambda_end_point.id}"
+  path_part   = "${var.redirect_short_url_lambda_api_gateway_path_part_short_url_id}"
+}
 
 module "redirect_short_url_lambda_end_point" {
   source 				= "github.com/JamesCollerton/Terraform_Modules//apigatewaylambdaintegration"
   api_gateway_id			= "${module.api_gateway.id}"
-  api_gateway_root_id			= "${module.api_gateway.root_resource_id}"
-  api_gateway_path_part 		= "${var.redirect_short_url_lambda_api_gateway_path_part}"
+  api_gateway_root_id			= "${aws_api_gateway_resource.aws_api_gateway_resource_redirect_short_url_id.id}"
+  api_gateway_path_part 		= "${var.redirect_short_url_lambda_api_gateway_path_part_redirect}"
   api_gateway_http_method 		= "${var.redirect_short_url_lambda_api_gateway_http_method}"
   aws_lambda_function_invoke_arn 	= "${module.redirect_short_url_lambda.invoke_arn}"
 }

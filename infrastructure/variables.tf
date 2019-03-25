@@ -28,27 +28,27 @@ variable "create_short_url_lambda_api_gateway_http_method" {
   type 		= "string"
 }
 
-variable "redirect_short_url_lambda_api_gateway_path_part" {
-  default 	= "shortened-url-information/{short-url}/redirect"
-  description 	= "The path we want to make the request to"
-  type 		= "string"
-}
+#variable "redirect_short_url_lambda_api_gateway_path_part" {
+#  default 	= "shortened-url-information/{short-url}/redirect"
+#  description 	= "The path we want to make the request to"
+#  type 		= "string"
+#}
 
 variable "redirect_short_url_lambda_api_gateway_path_part_root" {
-  default 	= "redirect"
-  description 	= "The path we want to make the request to"
+  default 	= "shortened-url-information"
+  description 	= "The root of the redirect request"
   type 		= "string"
 }
 
 variable "redirect_short_url_lambda_api_gateway_path_part_short_url_id" {
   default 	= "{short-url}"
-  description 	= "The path we want to make the request to"
+  description 	= "The part of the redirect request identifying the short URL."
   type 		= "string"
 }
 
 variable "redirect_short_url_lambda_api_gateway_path_part_redirect" {
   default 	= "redirect"
-  description 	= "The path we want to make the request to"
+  description 	= "The part of the redirect request informing us to redirect"
   type 		= "string"
 }
 
