@@ -1,7 +1,7 @@
 # API Gateway
 
 module "api_gateway" {
-  source                        = "github.com/JamesCollerton/Terraform_Modules//apigateway"
+  source                        = "github.com/JamesCollerton/Terraform_Modules//api-gateway"
   api_gateway_name              = "${var.api_gateway_name}"
   api_gateway_description       = "${var.api_gateway_description}"
 }
@@ -9,7 +9,7 @@ module "api_gateway" {
 # Lambdas
 
 module "iam_for_lambda" {
-  source = "github.com/JamesCollerton/Terraform_Modules//awsiamlambdarole" 
+  source = "github.com/JamesCollerton/Terraform_Modules//aws-iam-lambda-role" 
 }
 
 module "create_short_url_lambda" {
@@ -25,7 +25,7 @@ module "redirect_short_url_lambda" {
 # End points for each lambda
 
 module "create_short_url_lambda_end_point" {
-  source 				= "github.com/JamesCollerton/Terraform_Modules//apigatewaylambdaintegration"
+  source 				= "github.com/JamesCollerton/Terraform_Modules//api-gateway-lambda-integration"
   api_gateway_id			= "${module.api_gateway.id}"
   api_gateway_root_id			= "${module.api_gateway.root_resource_id}"
   api_gateway_path_part 		= "${var.create_short_url_lambda_api_gateway_path_part}"
@@ -40,7 +40,7 @@ resource "aws_api_gateway_resource" "aws_api_gateway_resource_redirect_short_url
 }
 
 module "redirect_short_url_lambda_end_point" {
-  source 				= "github.com/JamesCollerton/Terraform_Modules//apigatewaylambdaintegration"
+  source 				= "github.com/JamesCollerton/Terraform_Modules//api-gateway-lambda-integration"
   api_gateway_id			= "${module.api_gateway.id}"
   api_gateway_root_id			= "${aws_api_gateway_resource.aws_api_gateway_resource_redirect_short_url_id.id}"
   api_gateway_path_part 		= "${var.redirect_short_url_lambda_api_gateway_path_part_redirect}"
