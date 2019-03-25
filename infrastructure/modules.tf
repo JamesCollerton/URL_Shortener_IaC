@@ -33,15 +33,8 @@ module "create_short_url_lambda_end_point" {
   aws_lambda_function_invoke_arn 	= "${module.create_short_url_lambda.invoke_arn}"
 }
 
-#resource "aws_api_gateway_resource" "aws_api_gateway_resource_redirect_short_url_root" {
-#  rest_api_id = "${module.api_gateway.id}"
-#  parent_id   = "${module.api_gateway.root_resource_id}"
-#  path_part   = "${var.redirect_short_url_lambda_api_gateway_path_part_root}"
-#}
-
 resource "aws_api_gateway_resource" "aws_api_gateway_resource_redirect_short_url_id" {
   rest_api_id = "${module.api_gateway.id}"
-  #parent_id   = "${aws_api_gateway_resource.aws_api_gateway_resource_redirect_short_url_root.id}"
   parent_id   = "${module.create_short_url_lambda_end_point.id}"
   path_part   = "${var.redirect_short_url_lambda_api_gateway_path_part_short_url_id}"
 }
