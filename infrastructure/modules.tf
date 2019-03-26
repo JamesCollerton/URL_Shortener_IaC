@@ -2,7 +2,7 @@
 
 module "api_gateway" {
   source                        = "github.com/JamesCollerton/Terraform_Modules//api-gateway"
-  api_gateway_name              = "${var.api_gateway_name}"
+  api_gateway_name              = "${terraform.workspace}-${var.api_gateway_name}"
   api_gateway_description       = "${var.api_gateway_description}"
 }
 
@@ -13,13 +13,15 @@ module "iam_for_lambda" {
 }
 
 module "create_short_url_lambda" {
-  source = "github.com/JamesCollerton/URL_Shortener_Create_Short_URL_Lambda//infrastructure"
-  iam_for_lambda_arn = "${module.iam_for_lambda.arn}"
+  source 		= "github.com/JamesCollerton/URL_Shortener_Create_Short_URL_Lambda//infrastructure"
+  lambda_function_name 	= "${terraform.workspace}-${var.create_short_url_lambda_function_name}"
+  iam_for_lambda_arn 	= "${module.iam_for_lambda.arn}"
 }
 
 module "redirect_short_url_lambda" {
-  source = "github.com/JamesCollerton/URL_Shortener_Redirect_Short_URL_Lambda//infrastructure"
-  iam_for_lambda_arn = "${module.iam_for_lambda.arn}"
+  source 		= "github.com/JamesCollerton/URL_Shortener_Redirect_Short_URL_Lambda//infrastructure"
+  lambda_function_name  = "${terraform.workspace}-${var.redirect_short_url_lambda_function_name}"
+  iam_for_lambda_arn 	= "${module.iam_for_lambda.arn}"
 }
 
 # End points for each lambda
