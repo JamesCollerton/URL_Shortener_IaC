@@ -51,3 +51,13 @@ module "redirect_short_url_lambda_end_point" {
 }
 
 # Dynamo db
+
+module "dynamodb" {
+  source 			= "github.com/JamesCollerton/Terraform_Modules//dynamodb"
+  dynamo_db_table_name 		=  "${terraform.workspace}-${var.dynamo_db_table_name}"
+  dynamo_db_read_capacity 	=  "${var.dynamo_db_read_capacity}"
+  dynamo_db_write_capacity 	=  "${var.dynamo_db_write_capacity}"
+  dynamo_db_hash_key	 	=  "${var.dynamo_db_hash_key}"
+  dynamo_db_range_key 		=  "${var.dynamo_db_range_key}"
+  dynamo_db_list_of_attributes  =  "${var.dynamo_db_list_of_attributes}"
+}
