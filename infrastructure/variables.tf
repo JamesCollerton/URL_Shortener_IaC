@@ -15,15 +15,41 @@ variable "api_gateway_description" {
 # Lambdas
 
 variable "create_short_url_lambda_function_name" {
-  default = "url-shortener-create-short-url-lambda"
-  description = "Name we would like to assign to the shorten lambda function"
-  type = "string"
+  default 	= "url-shortener-create-short-url-lambda"
+  description 	= "Name we would like to assign to the shorten lambda function"
+  type 		= "string"
+}
+
+variable "create_short_url_lambda_s3_key" {
+  default       = "createshorturl-0.0.1-SNAPSHOT.jar"
+  description   = "Object key of the S3 bucket where we want to store our code"
+  type          = "string"
 }
 
 variable "redirect_short_url_lambda_function_name" {
-  default = "url-shortener-redirect-short-url-lambda"
-  description = "Name we would like to assign to the redirect lambda function"
-  type = "string"
+  default 	= "url-shortener-redirect-short-url-lambda"
+  description 	= "Name we would like to assign to the redirect lambda function"
+  type 		= "string"
+}
+
+variable "redirect_short_url_lambda_s3_key" {
+  default       = "redirectshorturl-0.0.1-SNAPSHOT.jar"
+  description   = "Object key of the S3 bucket where we want to store our code"
+  type          = "string"
+}
+
+# Lambda S3 Buckets
+
+variable "create_short_url_lambda_code_s3_bucket_name" {
+  default 	= "create-short-url-lambda-code-bucket"
+  description 	= "The name of the S3 bucket where we would like to store our code for the create short url service."
+  type 		= "string"
+}
+
+variable "redirect_short_url_lambda_code_s3_bucket_name" {
+  default 	= "redirect-short-url-lambda-code-bucket"
+  description 	= "The name of the S3 bucket where we would like to store our code for the redirect short url service"
+  type 		= "string"
 }
 
 # Lambda Integration with API Gateway

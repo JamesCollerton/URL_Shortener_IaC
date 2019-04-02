@@ -6,6 +6,35 @@ module "api_gateway" {
   api_gateway_description       = "${var.api_gateway_description}"
 }
 
+# Lambda S3 Buckets 
+
+module "create_short_url_lambda_code_s3_bucket" {
+  source      		= "github.com/JamesCollerton/Terraform_Modules//s3"
+  aws_s3_bucket_name 	= "${var.create_short_url_lambda_code_s3_bucket_name}"
+}
+
+resource "aws_s3_bucket_object" "create_short_url_lambda_code_s3_jar" {
+  bucket 	= "${module.create_short_url_lambda_code_s3_bucket.bucket}"
+  key    	= "${var.create_short_url_lambda_s3_key}"
+  source 	= "lambda-files/url-shortener-create-short-url-lambda.zip"
+  depends_on 	= ["module.create_short_url_lambda_code_s3_bucket"]
+}
+
+module "redirect_short_url_lambda_code_s3_bucket" {
+  source      		= "github.com/JamesCollerton/Terraform_Modules//s3"
+  aws_s3_bucket_name 	= "${var.redirect_short_url_lambda_code_s3_bucket_name}"
+}
+
+resource "aws_s3_bucket_object" "redirect_short_url_lambda_code_s3_jar" {
+  bucket 	= "${module.redirect_short_url_lambda_code_s3_bucket.bucket}"
+  #bucket 	= "${var.redirect_short_url_lambda_code_s3_bucket_name}"
+  key    	= "${var.redirect_short_url_lambda_s3_key}"
+  source 	= "lambda-files/url-shortener-redirect-short-url-lambda.zip"
+  depends_on 	= ["module.redirect_short_url_lambda_code_s3_bucket"]
+}
+
+# Lambda S3 Bucket Files
+
 # Lambdas
 
 module "iam_for_lambda" {
@@ -14,15 +43,21 @@ module "iam_for_lambda" {
 
 module "create_short_url_lambda" {
   source 		= "github.com/JamesCollerton/URL_Shortener_Create_Short_URL_Lambda//infrastructure"
+  lambda_s3_bucket 	= "${var.create_short_url_lambda_code_s3_bucket_name}"
+  lambda_s3_key 	= "${var.create_short_url_lambda_s3_key}"
   lambda_function_name 	= "${terraform.workspace}-${var.create_short_url_lambda_function_name}"
   iam_for_lambda_arn 	= "${module.iam_for_lambda.arn}"
 }
 
 module "redirect_short_url_lambda" {
   source 		= "github.com/JamesCollerton/URL_Shortener_Redirect_Short_URL_Lambda//infrastructure"
+  lambda_s3_bucket 	= "${var.redirect_short_url_lambda_code_s3_bucket_name}"
+  lambda_s3_key 	= "${var.redirect_short_url_lambda_s3_key}"
+  lambda_function_name 	= "${terraform.workspace}-${var.create_short_url_lambda_function_name}"
   lambda_function_name  = "${terraform.workspace}-${var.redirect_short_url_lambda_function_name}"
   iam_for_lambda_arn 	= "${module.iam_for_lambda.arn}"
 }
+
 
 # End points for each lambda
 
