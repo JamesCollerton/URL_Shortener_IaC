@@ -12,6 +12,12 @@ variable "api_gateway_description" {
   type 		= "string" 
 }
 
+variable "api_gateway_deployment_stage_name" {
+  default 	= "prod"
+  type          = "string"
+  description   = "The name of the stage to create"
+}
+
 # Lambdas
 
 variable "create_short_url_lambda_function_name" {

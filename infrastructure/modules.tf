@@ -27,13 +27,10 @@ module "redirect_short_url_lambda_code_s3_bucket" {
 
 resource "aws_s3_bucket_object" "redirect_short_url_lambda_code_s3_jar" {
   bucket 	= "${module.redirect_short_url_lambda_code_s3_bucket.bucket}"
-  #bucket 	= "${var.redirect_short_url_lambda_code_s3_bucket_name}"
   key    	= "${var.redirect_short_url_lambda_s3_key}"
   source 	= "lambda-files/url-shortener-redirect-short-url-lambda.zip"
   depends_on 	= ["module.redirect_short_url_lambda_code_s3_bucket"]
 }
-
-# Lambda S3 Bucket Files
 
 # Lambdas
 
@@ -56,17 +53,6 @@ module "redirect_short_url_lambda" {
   lambda_function_name 	= "${terraform.workspace}-${var.create_short_url_lambda_function_name}"
   lambda_function_name  = "${terraform.workspace}-${var.redirect_short_url_lambda_function_name}"
   iam_for_lambda_arn 	= "${module.iam_for_lambda.arn}"
-}
-
-resource "aws_api_gateway_deployment" "api_gateway_deployment" {
-  depends_on = [
-        "module.api_gateway",
-        "module.create_short_url_lambda", 
-        "module.redirect_short_url_lambda"
-  ]
-
-  rest_api_id = "${module.api_gateway.id}"
-  stage_name  = "prod"
 }
 
 # End points for each lambda
@@ -93,6 +79,19 @@ module "redirect_short_url_lambda_end_point" {
   api_gateway_path_part 		= "${var.redirect_short_url_lambda_api_gateway_path_part_redirect}"
   api_gateway_http_method 		= "${var.redirect_short_url_lambda_api_gateway_http_method}"
   aws_lambda_function_invoke_arn 	= "${module.redirect_short_url_lambda.invoke_arn}"
+}
+
+# API Gateway deployment
+
+# Can't be a module as we need dependencies
+resource "aws_api_gateway_deployment" "api_gateway_deployment" {
+  depends_on = [
+        "module.create_short_url_lambda_end_point", 
+        "module.redirect_short_url_lambda_end_point"
+  ]
+
+  rest_api_id = "${module.api_gateway.id}"
+  stage_name  = "${var.api_gateway_deployment_stage_name}"
 }
 
 # Dynamo db
