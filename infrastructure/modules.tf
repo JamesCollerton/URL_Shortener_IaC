@@ -58,6 +58,16 @@ module "redirect_short_url_lambda" {
   iam_for_lambda_arn 	= "${module.iam_for_lambda.arn}"
 }
 
+resource "aws_api_gateway_deployment" "api_gateway_deployment" {
+  depends_on = [
+        "module.api_gateway",
+        "module.create_short_url_lambda", 
+        "module.redirect_short_url_lambda"
+  ]
+
+  rest_api_id = "${module.api_gateway.id}"
+  stage_name  = "prod"
+}
 
 # End points for each lambda
 
