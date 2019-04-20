@@ -18,6 +18,18 @@ variable "api_gateway_deployment_stage_name" {
   description   = "The name of the stage to create"
 }
 
+variable "create_short_url_lambda_end_point_api_key_required" {
+  default 	= "true"
+  type          = "string"
+  description   = "Whether or not we want to secure the end point of the Create Short URL endpoint with an API key"
+}
+
+variable "redirect_short_url_lambda_end_point_api_key_required" {
+  default 	= "true"
+  type          = "string"
+  description   = "Whether or not we want to secure the end point of the redirect Short URL endpoint with an API key"
+}
+
 # Lambdas
 
 variable "create_short_url_lambda_function_name" {
