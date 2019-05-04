@@ -14,7 +14,7 @@ module "api_gateway" {
 
 module "create_short_url_lambda_code_s3_bucket" {
   source      		= "github.com/JamesCollerton/Terraform_Modules//s3"
-  aws_s3_bucket_name 	= "${var.create_short_url_lambda_code_s3_bucket_name}"
+  aws_s3_bucket_name 	= "${terraform.workspace}-${var.create_short_url_lambda_code_s3_bucket_name}"
 }
 
 resource "aws_s3_bucket_object" "create_short_url_lambda_code_s3_jar" {
@@ -26,7 +26,7 @@ resource "aws_s3_bucket_object" "create_short_url_lambda_code_s3_jar" {
 
 module "redirect_short_url_lambda_code_s3_bucket" {
   source      		= "github.com/JamesCollerton/Terraform_Modules//s3"
-  aws_s3_bucket_name 	= "${var.redirect_short_url_lambda_code_s3_bucket_name}"
+  aws_s3_bucket_name 	= "${terraform.workspace}-${var.redirect_short_url_lambda_code_s3_bucket_name}"
 }
 
 resource "aws_s3_bucket_object" "redirect_short_url_lambda_code_s3_jar" {
