@@ -108,6 +108,12 @@ variable "redirect_short_url_lambda_api_gateway_http_method" {
   type 		= "string"
 }
 
+variable "api_gateway_timeout_milliseconds" {
+  default 	= "29000"
+  description   = "Time in milliseconds before the API integration times out"
+  type          = "string"
+}
+
 # Dynamo DB
 
 variable "dynamo_db_table_name" {
@@ -129,24 +135,24 @@ variable "dynamo_db_write_capacity" {
 }
 
 variable "dynamo_db_hash_key" {
-  default 	= "ShortUrl"
+  default 	= "shortUrl"
   type 		= "string"
   description   = "The hash, partition or primary key"
 }
 
 variable "dynamo_db_range_key" {
-  default 	= "LongUrl"
+  default 	= "longUrl"
   type 		= "string"
   description   = "The range, sort or composite key"
 }
 
 variable "dynamo_db_list_of_attributes" {
   default 	= [	{
-    				name = "ShortUrl"
+    				name = "shortUrl"
     				type = "S"
   			},
 			{
-				name = "LongUrl"
+				name = "longUrl"
 				type = "S"
 			}
 		]

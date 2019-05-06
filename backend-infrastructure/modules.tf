@@ -73,6 +73,7 @@ module "create_short_url_lambda_end_point" {
   api_gateway_path_part 		= "${var.create_short_url_lambda_api_gateway_path_part}"
   api_gateway_http_method 		= "${var.create_short_url_lambda_api_gateway_http_method}"
   api_gateway_key_required 		= "${var.create_short_url_lambda_end_point_api_key_required}"
+  api_gateway_timeout_milliseconds	= "${var.api_gateway_timeout_milliseconds}"
   aws_lambda_function_invoke_arn 	= "${module.create_short_url_lambda.invoke_arn}"
 }
 
@@ -89,6 +90,7 @@ module "redirect_short_url_lambda_end_point" {
   api_gateway_path_part 		= "${var.redirect_short_url_lambda_api_gateway_path_part_redirect}"
   api_gateway_http_method 		= "${var.redirect_short_url_lambda_api_gateway_http_method}"
   api_gateway_key_required 		= "${var.redirect_short_url_lambda_end_point_api_key_required}"
+  api_gateway_timeout_milliseconds	= "${var.api_gateway_timeout_milliseconds}"
   aws_lambda_function_invoke_arn 	= "${module.redirect_short_url_lambda.invoke_arn}"
 }
 
