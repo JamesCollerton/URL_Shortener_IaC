@@ -109,7 +109,7 @@ variable "redirect_short_url_lambda_api_gateway_http_method" {
 }
 
 variable "api_gateway_timeout_milliseconds" {
-  default 	= "29000"
+  default 	= "20000"
   description   = "Time in milliseconds before the API integration times out"
   type          = "string"
 }
