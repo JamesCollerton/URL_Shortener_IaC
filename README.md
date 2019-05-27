@@ -1,9 +1,18 @@
 # URL Shortener IaC
 
-This is the Infrastructure as Code for the URL shortener project that is not directly related to a CI/CD pipeline. Included in it is
+This is the Infrastructure as Code for the URL Shortener project. It uses the [Troposphere](https://github.com/cloudtools/troposphere) Python library for generating CloudFormation templates.
 
-- Shared remote state back end
-- DynamoDB instance
-- Amazon API gateway
+## Set up
 
-Any remaining infrastructure (for example, for the lambdas) is contained in the relevant repositories.
+It is recommended to use a virtual environment. A useful tutorial is found [here](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/). You will also need the Troposphere library installed.
+
+```
+# Create virtual environment
+python3 -m venv env
+
+# Use virtual environment
+source env/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
